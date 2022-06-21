@@ -1,6 +1,6 @@
-# Uranium
+# Radon
 
-Repository for backend cohort - Uranium
+Repository for backend cohort - Radon
 
 ## Blogging Site Mini Project Requirement
 
