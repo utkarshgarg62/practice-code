@@ -1,4 +1,5 @@
-const blogModel = require("../model/blogModel")
+const blogModel = require("../models/blogModel")
+
 const createBlog = async function (req, res) {
     try {
         let data = req.body;
