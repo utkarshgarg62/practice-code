@@ -4,6 +4,7 @@ const authorModel = require("../models/authorModel");
 const createAuthor = async function (req, res) {
     try {
         let data = req.body;
+
         let savedData = await authorModel.create(data);
         return res.status(201).send({ msg: savedData });
     }
@@ -13,3 +14,4 @@ const createAuthor = async function (req, res) {
 
 };
 module.exports.createAuthor = createAuthor
+
