@@ -1,15 +1,19 @@
-const { model } = require("mongoose");
+const mongoose = require("mongoose");
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
 const moment = require('moment')
 const createBlog = async function (req, res) {
     try {
         let data = req.body;
+        let regex = /^[A-Za-z0-9 ]+$/
         if (!data) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
         }
         if (!data.title) {
             return res.status(400).send({ msg: "Enter Title" })
+        }
+        if (!regex.exec(data.title)) {
+            return res.status(400).send({ msg: "create valid title" })
         }
         if (!data.body) {
             return res.status(400).send({ msg: "Enter Body" })
@@ -26,12 +30,14 @@ const createBlog = async function (req, res) {
         if (!data.authorId) {
             return res.status(400).send({ msg: "Enter Valid Author Id" })
         }
+        var ObjectId = mongoose.Types.ObjectId;
+        if (!ObjectId.isValid(req.body.authorId)) {
+            return res.status(400).send({ msg: "Enter Valid Author Id" })
+        }
         let author = await authorModel.findById(data.authorId)
         if (!author) {
             return res.status(400).send({ status: false, msg: "Author id is not vaild" })
         }
-
-
         let savedData = await blogModel.create(data);
         res.status(201).send({ msg: savedData });
     }
@@ -45,16 +51,18 @@ module.exports.createBlog = createBlog
 
 const getBlogData = async function (req, res) {
     try {
-        let allBlogs = await blogModel.find({ isDeleted: true })
+        let allBlogs = await blogModel.find({ isDeleted: true,isPublished:true })
         if (allBlogs.length > 0) {
-            let authorId= req.query.authorId
-            if(authorId){
-                  let author = await blogModel.findOne({ authorId: req.query.authorId })
-                  if (!author) {
-                   return res.status(400).send({ status: false, msg: "Author id is not vaild" })
-            }}
+            let authorId = req.query.authorId
+            if (authorId) {
+                let author = await blogModel.findOne({ authorId: req.query.authorId })
+                if (!author) {
+                    return res.status(400).send({ status: false, msg: "Author id is not vaild" })
+                }
+            }
             // authorId Validation
             req.query.isDeleted = false
+            req.query.isPublished=true
             let updatedData = await blogModel.find(req.query)
             if (updatedData.length > 0) {
                 res.status(200).send({ status: true, data: updatedData })
@@ -129,7 +137,7 @@ let queryDelete = async function (req, res) {
     try {
         let data = req.query
         //let filter = {...data}
-        if (!data) return res.status(400).send({ status: false, msg: "query params is not given" })
+        if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
         let blogvalidation = await blogModel.find(data)
         if (!blogvalidation) returnres.req(404).send({ status: false, msg: "blog does not exist" })
         if (blogvalidation.isDeleted == true) return res.status(404).send({ status: false, msg: "blog is all ready deleted" })
