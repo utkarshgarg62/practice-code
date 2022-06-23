@@ -2,42 +2,45 @@ const { response } = require("express");
 const authorModel = require("../models/authorModel");
 const validator = require('validation')
 const jwt = require('jsonwebtoken')
+const { isValidName, isValidTitle, isValidEmail, isValidPassword, isValidObjectId, isBoolean, isValid } = require("../middleware/validation")
+
 
 const createAuthor = async function (req, res) {
     try {
-        let data = req.body;
-        let regex = /^[A-Za-z]+$/
-        let re = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
-
-        if (!data) {
+        let {fname,lname,title,email,password} = req.body;
+        
+        if (!req.body) {
             return res.status(404).send({ msg: "Insert Data : BAD REQUEST" })
         }
-        if (!data.fname) {
+        if (!isValid(fname)) {
             return res.status(404).send({ msg: "Enter First Name" })
         }
-        if (!regex.exec(data.fname)) {
+        if (!isValidName(fname)) {
             return res.status(400).send({ msg: "fname only take alphabets" })
         }
-        if (!data.lname) {
+        if (!isValid(lname)) {
             return res.status(404).send({ msg: "Enter Last Name" })
         }
-        if (!regex.exec(data.lname)) {
+        if (!isValidName(lname)) {
             return res.status(400).send({ msg: "lname only take alphabets" })
         }
-        if (!data.title) {
+        if (!isValid(title)) {
             return res.status(404).send({ msg: "Create Title Name" })
         }
-        if (!data.email) {
-            return res.status(404).send({ msg: "Create Valid Email-Id" })
+        if (!isValidTitle(title)) {
+            return res.status(404).send({ msg: "Enter title from this ['Mr', 'Mrs', 'Miss']" })
         }
-        if (!re.exec(data.email)) {
+        if (!isValid(email)) {
+            return res.status(404).send({ msg: "Enter Email-Id" })
+        }
+        if (!isValidEmail(email)) {
             return res.status(400).send({ msg: "enter valid email" })
         }
-        if (!data.password) {
+        if (!isValid(password)) {
             return res.status(404).send({ msg: "Create Password" })
         }
-        if (data.password.length <= 8) {
-            return res.status(400).send({ msg: "create more than 8 characters password" })
+        if (!isValidPassword(password)) {
+            return res.status(400).send({ msg: "Minimum eight characters, at least one letter and one number" })
         }
         let savedData = await authorModel.create(data);
         return res.status(201).send({ msg: savedData });
@@ -53,11 +56,13 @@ const loginAuthor = async function (req, res) {
     try {
         let emailId = req.body.emailId;
         let password = req.body.password;
-        let author = await authorModel.findOne({ emailId: emailId, password: password });
+        if(!emailId) return res.status(400).send({status:false,msg:"enter emailId"})
+        if(!password) return res.status(400).send({status:false,msg:"enter password"})
+        let author = await authorModel.findOne({ $and:[{emailId: emailId}, {password: password }]});
         if (!author)
             return res.status(400).send({
                 status: false,
-                msg: "email or the password is not corerct",
+                msg: "email or the password is not correct",
             });
         let token = jwt.sign(
             {

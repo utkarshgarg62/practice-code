@@ -1,42 +1,41 @@
 const mongoose = require("mongoose");
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
-const moment = require('moment')
+const moment = require('moment');
+const { isValid, isValidBlogTitle } = require("../middleware/validation");
 const createBlog = async function (req, res) {
     try {
-        let data = req.body;
-        let regex = /^[A-Za-z0-9 ]+$/
-        if (!data) {
+        let {title,body,tags,category,subcategory,authorId,} = req.body;
+        
+        if (!req.body) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
         }
-        if (!data.title) {
+        if (!isValid(title)) {
             return res.status(400).send({ msg: "Enter Title" })
         }
-        if (!regex.exec(data.title)) {
+        if (!isValidBlogTitle(title)) {
             return res.status(400).send({ msg: "create valid title" })
         }
-        if (!data.body) {
+        if (!isValid(body)) {
             return res.status(400).send({ msg: "Enter Body" })
         }
-        if (!data.tags) {
-            return res.status(400).send({ msg: "Enter tags" })
-        }
-        if (!data.category) {
+       
+        if (!isValid(category)) {
             return res.status(400).send({ msg: "Enter Category" })
         }
-        if (!data.subcategory) {
-            return res.status(400).send({ msg: "Enter subcategory" })
+       
+        if (isValid(authorId)) {
+            return res.status(400).send({ msg: "Enter  Author Id" })
         }
-        if (!data.authorId) {
+       
+        if (isValidObjectId(authorId)) {
             return res.status(400).send({ msg: "Enter Valid Author Id" })
         }
-        var ObjectId = mongoose.Types.ObjectId;
-        if (!ObjectId.isValid(req.body.authorId)) {
-            return res.status(400).send({ msg: "Enter Valid Author Id" })
-        }
+
+
         let author = await authorModel.findById(data.authorId)
         if (!author) {
-            return res.status(400).send({ status: false, msg: "Author id is not vaild" })
+            return res.status(400).send({ status: false, msg: "Author  is not found" })
         }
         let savedData = await blogModel.create(data);
         res.status(201).send({ msg: savedData });
@@ -60,7 +59,6 @@ const getBlogData = async function (req, res) {
                     return res.status(400).send({ status: false, msg: "Author id is not vaild" })
                 }
             }
-            // authorId Validation
             req.query.isDeleted = false
             req.query.isPublished=true
             let updatedData = await blogModel.find(req.query)
@@ -97,7 +95,7 @@ const updateBlog = async function (req, res) {
         if (data.subcategory) {
             data.subcategory = blog.subcategory.concat(data.subcategory)
         }
-        if (data.isPublished === true) { data.publishedAt = Date.now() }
+        if (data.isPublished === true) { data.publishedAt = moment().format() }
 
         let updatedBlog = await blogModel.findOneAndUpdate({ _id: blogId }, { $set: data }, { new: true })
         res.status(200).send(updatedBlog)
