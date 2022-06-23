@@ -4,6 +4,7 @@ const AuthorController=require("../controller/authorController")
 const BlogController=require("../controller/blogController")
 const {authenticate,authorization} = require("../middleware/middleware")
 
+//====================================================APIs================================================================================
 
 router.post("/authors", AuthorController.createAuthor  )
 router.post("/blogs", BlogController.createBlog)

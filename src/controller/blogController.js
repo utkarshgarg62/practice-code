@@ -2,10 +2,14 @@ const mongoose = require("mongoose");
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
 const moment = require('moment');
-const { isValid, isValidBlogTitle } = require("../middleware/validation");
+const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/validation");
+
+//====================================================Create Blog Api========================================================================
+
+
 const createBlog = async function (req, res) {
     try {
-        let {title,body,tags,category,subcategory,authorId,} = req.body;
+        let {title,body,tags,category,subcategory,authorId} = req.body;
         
         if (!req.body) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
@@ -24,20 +28,20 @@ const createBlog = async function (req, res) {
             return res.status(400).send({ msg: "Enter Category" })
         }
        
-        if (isValid(authorId)) {
+        if (!isValid(authorId)) {
             return res.status(400).send({ msg: "Enter  Author Id" })
         }
        
-        if (isValidObjectId(authorId)) {
+        if (!isValidObjectId(authorId)) {
             return res.status(400).send({ msg: "Enter Valid Author Id" })
         }
 
 
-        let author = await authorModel.findById(data.authorId)
+        let author = await authorModel.findById(req.body.authorId)
         if (!author) {
             return res.status(400).send({ status: false, msg: "Author  is not found" })
         }
-        let savedData = await blogModel.create(data);
+        let savedData = await blogModel.create(req.body);
         res.status(201).send({ msg: savedData });
     }
     catch (err) {
@@ -46,6 +50,9 @@ const createBlog = async function (req, res) {
 };
 module.exports.createBlog = createBlog
 
+
+
+//====================================================Get Blog Api========================================================================
 
 
 const getBlogData = async function (req, res) {
@@ -82,6 +89,9 @@ module.exports.getBlogData = getBlogData
 
 
 
+//================================================Update Blog Api========================================================================
+
+
 
 const updateBlog = async function (req, res) {
     try {
@@ -110,6 +120,11 @@ module.exports.updateBlog = updateBlog
 
 
 
+
+//================================================Delete Blog Api From BlogId=================================================================
+
+
+
 let deleted = async function (req, res) {
     try {
         let id = req.params.blogId
@@ -131,10 +146,15 @@ let deleted = async function (req, res) {
 
 module.exports.deleted = deleted
 
+
+
+//================================================Delete Blog Api From Query-Params=======================================================
+
+
+
 let queryDelete = async function (req, res) {
     try {
         let data = req.query
-        //let filter = {...data}
         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
         let blogvalidation = await blogModel.find(data)
         if (!blogvalidation) returnres.req(404).send({ status: false, msg: "blog does not exist" })

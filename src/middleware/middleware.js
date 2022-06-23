@@ -3,6 +3,9 @@ const blogModel = require("../models/blogModel");
 
 
 
+//====================================================Authentication========================================================================
+
+
 const authenticate = function (req, res, next) {
     try {
         let token = req.headers["x-api-key"];
@@ -15,6 +18,10 @@ const authenticate = function (req, res, next) {
         res.status(500).send({ msg: error.message })
     }    
 }
+
+
+//====================================================Authorization========================================================================
+
 
 const authorization = async function (req, res, next) {
     try {

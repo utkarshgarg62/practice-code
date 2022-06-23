@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken')
 const { isValidName, isValidTitle, isValidEmail, isValidPassword, isValidObjectId, isBoolean, isValid } = require("../middleware/validation")
 
 
+
+//====================================================Create Author Api====================================================================
+
+
+
 const createAuthor = async function (req, res) {
     try {
         let {fname,lname,title,email,password} = req.body;
@@ -36,6 +41,9 @@ const createAuthor = async function (req, res) {
         if (!isValidEmail(email)) {
             return res.status(400).send({ msg: "enter valid email" })
         }
+        let checkEmail=await authorModel .findOne({email:email})
+        if(checkEmail) return res.status(400).send({msg :"Email Already Registered"})
+        
         if (!isValid(password)) {
             return res.status(404).send({ msg: "Create Password" })
         }
@@ -51,6 +59,10 @@ const createAuthor = async function (req, res) {
 
 };
 
+
+//====================================================Author Login Api=======================================================================
+
+
 const loginAuthor = async function (req, res) {
 
     try {
@@ -58,7 +70,7 @@ const loginAuthor = async function (req, res) {
         let password = req.body.password;
         if(!emailId) return res.status(400).send({status:false,msg:"enter emailId"})
         if(!password) return res.status(400).send({status:false,msg:"enter password"})
-        let author = await authorModel.findOne({ $and:[{emailId: emailId}, {password: password }]});
+        let author = await authorModel.findOne({ $and:[{email: emailId}, {password: password }]});
         if (!author)
             return res.status(400).send({
                 status: false,
@@ -78,5 +90,8 @@ const loginAuthor = async function (req, res) {
 
 
 }
+
+
+
 module.exports.createAuthor = createAuthor
 module.exports.loginAuthor = loginAuthor
