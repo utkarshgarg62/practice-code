@@ -89,7 +89,7 @@ const updateBlog = async function (req, res) {
     try {
         let blogId = req.params.blogId
         let blog = await blogModel.findOne({ _id: blogId, isDeleted: false })
-        if (!blog) { return res.status(404).send({ status: false, msg: "blog not found" }) }
+        if (!blog) { return res.status(400).send({ status: false, msg: "blog not found" }) }
         let data = req.body
         if (data.tags) {
             data.tags = blog.tags.concat(data.tags)
@@ -115,10 +115,10 @@ module.exports.updateBlog = updateBlog
 let deleted = async function (req, res) {
     try {
         let id = req.params.blogId
-        if (!id) return res.status(404).send({ sataus: false, msg: "blog id is required" })
+        if (!id) return res.status(400).send({ sataus: false, msg: "blog id is required" })
         let idvalidation = await blogModel.findById(id)
-        if (!idvalidation) return res.status(404).send({ status: false, msg: "invalid blog id" })
-        if (idvalidation.isDeleted == true) return res.status(404).send({ status: false, msg: "blog is already deleted" })
+        if (!idvalidation) return res.status(400).send({ status: false, msg: "invalid blog id" })
+        if (idvalidation.isDeleted == true) return res.status(400).send({ status: false, msg: "blog is already deleted" })
         if (idvalidation.isDeleted == false) {
             let validetion = await blogModel.findOneAndUpdate({ _id: id }, { $set: { isDeleted: true, deletedAt: moment().format() } })
             return res.status(200).send({ status: true, msg: "blog is deleted successfully" })
@@ -140,7 +140,7 @@ let queryDelete = async function (req, res) {
         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
         let blogvalidation = await blogModel.find(data)
         if (!blogvalidation) returnres.req(404).send({ status: false, msg: "blog does not exist" })
-        if (blogvalidation.isDeleted == true) return res.status(404).send({ status: false, msg: "blog is all ready deleted" })
+        if (blogvalidation.isDeleted == true) return res.status(400).send({ status: false, msg: "blog is all ready deleted" })
         for (let i = 0; i < blogvalidation.length; i++) {
             if (blogvalidation[i].isDeleted == false) {
                 let deletion = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt: moment().format() } })
