@@ -159,7 +159,7 @@ let queryDelete = async function (req, res) {
     try {
         let data = req.query
         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
-        
+
         let blogvalidation = await blogModel.find(data)
         if (!blogvalidation) returnres.req(404).send({ status: false, msg: "blog does not exist" })
         if (blogvalidation.isDeleted == true) return res.status(400).send({ status: false, msg: "blog is all ready deleted" })
@@ -178,34 +178,3 @@ let queryDelete = async function (req, res) {
 
 module.exports.queryDelete = queryDelete
 
-
-
-
-
-const deleteparams = async function (req, res) {
-
-    try {
-  
-      let data = req.query; 
-  
-        const deleteByQuery = await blogModel.updateMany(
-  
-        { $and: [data, { isDeleted: false }] },
-  
-        { $set: { isDeleted: true ,DeletedAt:new Date()} },
-  
-        { new: true })
-  
-        if (deleteByQuery.modifiedCount==0) return res.status(400).send({ status: false, msg: "The Blog is already Deleted" })
-  
-        res.status(200).send({ status: true, msg: deleteByQuery })
-    }
-  
-    catch (err) {
-  
-      res.status(500).send({ error: err.message })
-  
-    }
-  }
-
-  module.exports.deleteparams=deleteparams
