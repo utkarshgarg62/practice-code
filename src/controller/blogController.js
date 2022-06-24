@@ -12,7 +12,7 @@ const createBlog = async function (req, res) {
     try {
         let {title,body,tags,category,subcategory,authorId} = req.body;
         
-        if (!req.body) {
+        if (Object.keys(req.body).length<1) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
         }
         if (!isValid(title)) {
