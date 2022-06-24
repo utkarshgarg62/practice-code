@@ -37,10 +37,10 @@ const createBlog = async function (req, res) {
         }
 
 
-        let author = await authorModel.findById(req.body.authorId)
-        if (!author) {
-            return res.status(400).send({ status: false, msg: "Author  is not found" })
-        }
+        // let author = await authorModel.findById(req.body.authorId)
+        // if (!author) {
+        //     return res.status(400).send({ status: false, msg: "Author  is not found" })
+        // }
         let savedData = await blogModel.create(req.body);
         res.status(201).send({ msg: savedData });
     }
