@@ -23,7 +23,6 @@ const blogSchema = new mongoose.Schema({
     },
     subcategory: [{
         type: String,
-        //required: true
     }],
     deletedAt: {
         type: String,
