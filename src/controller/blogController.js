@@ -3,6 +3,7 @@ const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
 const moment = require('moment');
 const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/validation");
+const { decode } = require("jsonwebtoken");
 
 //====================================================Create Blog Api========================================================================
 
@@ -57,9 +58,11 @@ module.exports.createBlog = createBlog
 
 const getBlogData = async function (req, res) {
     try {
+
         let allBlogs = await blogModel.find({ isDeleted: true,isPublished:true })
         if (allBlogs.length > 0) {
             let authorId = req.query.authorId
+
             if (authorId) {
                 let author = await blogModel.findOne({ authorId: req.query.authorId })
                 if (!author) {
@@ -173,3 +176,35 @@ let queryDelete = async function (req, res) {
 }
 
 module.exports.queryDelete = queryDelete
+
+
+
+
+
+const deleteparams = async function (req, res) {
+
+    try {
+  
+      let data = req.query; 
+  
+        const deleteByQuery = await blogModel.updateMany(
+  
+        { $and: [data, { isDeleted: false }] },
+  
+        { $set: { isDeleted: true ,DeletedAt:new Date()} },
+  
+        { new: true })
+  
+        if (deleteByQuery.modifiedCount==0) return res.status(400).send({ status: false, msg: "The Blog is already Deleted" })
+  
+        res.status(200).send({ status: true, msg: deleteByQuery })
+    }
+  
+    catch (err) {
+  
+      res.status(500).send({ error: err.message })
+  
+    }
+  }
+
+  module.exports.deleteparams=deleteparams

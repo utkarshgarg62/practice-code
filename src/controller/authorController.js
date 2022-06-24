@@ -50,7 +50,7 @@ const createAuthor = async function (req, res) {
         if (!isValidPassword(password)) {
             return res.status(400).send({ msg: "Minimum eight characters, at least one letter and one number" })
         }
-        let savedData = await authorModel.create(data);
+        let savedData = await authorModel.create(req.body);
         return res.status(201).send({ msg: savedData });
     }
     catch (err) {
