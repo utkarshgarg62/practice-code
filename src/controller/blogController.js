@@ -167,34 +167,3 @@ let queryDelete = async function (req, res) {
 
 module.exports.queryDelete = queryDelete
 
-
-
-
-
-const deleteparams = async function (req, res) {
-
-    try {
-  
-      let data = req.query; 
-  
-        const deleteByQuery = await blogModel.updateMany(
-  
-        { $and: [data, { isDeleted: false }] },
-  
-        { $set: { isDeleted: true ,DeletedAt:new Date()} },
-  
-        { new: true })
-  
-        if (deleteByQuery.modifiedCount==0) return res.status(400).send({ status: false, msg: "The Blog is already Deleted" })
-  
-        res.status(200).send({ status: true, msg: deleteByQuery })
-    }
-  
-    catch (err) {
-  
-      res.status(500).send({ error: err.message })
-  
-    }
-  }
-
-  module.exports.deleteparams=deleteparams

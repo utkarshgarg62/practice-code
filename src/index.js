@@ -24,7 +24,6 @@ mongoose.connect("mongodb+srv://functionup-radon-cohort:radon123@cluster0.zbsotu
 app.use('/', route)  
 
 
-
 app.listen(process.env.PORT || 3000, function () {
     console.log('Express app running on port ' + (process.env.PORT || 3000))
 });
