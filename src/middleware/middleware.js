@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
 const mongoose =require('mongoose');
 const authorModel = require("../models/authorModel");
+const {isValidObjectId} = require('../middleware/validation')
 
 
 //====================================================Authentication========================================================================
@@ -10,7 +11,7 @@ const authorModel = require("../models/authorModel");
 const authenticate = function (req, res, next) {
     try {
         let token = req.headers["x-api-key"];
-        if (!token) return res.status(401).send({ status: false, msg: "token must be present" });
+        if (!token) return res.status(400).send({ status: false, msg: "token must be present" });
         let decodedToken = jwt.verify(token, "group-25");
         if (!decodedToken) return res.status(400).send({ status: false, msg: "token is invalid" });
 
@@ -150,54 +151,38 @@ const newAuth = async function (req, res, next) {
    
     try {
       
-        let token = req.headers["x-api-key"]
-      
-        if (!token)return res.status(400).send({ status: false, msg: "token not found" })
-      
-        let decodedToken = jwt.verify(token, "group-25")
-      
-        if (!decodedToken) return res.status(401).send({ status: false, msg: "invalid token" })
-
-        let blog_Id = req.params.blogId
-        let userId = decodedToken.authorId
-        let data = req.query; 
-
-        if(blog_Id){
-        if (!mongoose.isValidObjectId(blog_Id)) return res.status(400).send({ status: false, msg: "Enter a Valid BlogId"})
-        let authorData=await blogModel.findOne({_id:blog_Id,authorId:userId})
-        if (!authorData)return res.send({ status: false, msg:"you are not authorized" })
-        }
-
-        
+        let token = req.headers["x-api-key"];
+        let decodedToken = jwt.verify(token, "group-25");
        
-        if(data.authorId){
-            if (!mongoose.isValidObjectId(data.authorId)) return res.status(400).send({ status: false, msg: "Enter a Valid authorId"})
-            if(data.authorId!=userId)return res.send({ status: false, msg:"you are not authorized" })  
-        }
-  
-        
-        if(data.category){
-            let authorData=await blogModel.find({category:data.category,authorId:userId})
-            if (!authorData.length)return res.send({ status: false, msg:"you are not authorized" })  
-        }
 
-        if(data.subcategory){
-            let authorData=await blogModel.find({subcategory:data.subcategory,authorId:userId})
-            if (!authorData.length)return res.send({ status: false, msg:"you are not authorized" }) 
+        let fromBodyAuthorId = req.body.authorId
+        let authorLoggedIn = decodedToken.authorId
+        let fromParamsBlogId = req.params.blogId      
+
+       
+      if(fromBodyAuthorId) { 
+        if(!isValidObjectId(fromBodyAuthorId)) return res.status(400).send({status:false,msg:"enter valid blogId"})
+        let author = await authorModel.findById(fromBodyAuthorId)
+         if (!author) {
+            return res.status(400).send({ status: false, msg: "Author  is not exists" })
+         }
+        if (fromBodyAuthorId != authorLoggedIn) {
+            return res.status(403).send({ status: false, msg: 'author logged is not allowed to create blog for another authorId' })
         }
-  
-        if(data.tags){
-            let authorData=await blogModel.find({tags:data.tags,authorId:userId})
-            if (!authorData.length)return res.send({ status: false, msg:"you are not authorized" })   
-        }
-  
-        if(data.isPublished){
-            let authorData=await blogModel.find({isPublished:data.isPublished,authorId:userId})
-            if (!authorData.length)return res.send({ status: false, msg:"you are not authorized" })
-        }
-  
         next()
-  }
+       }
+
+       if(fromParamsBlogId){
+        if(!isValidObjectId(fromParamsBlogId)) return res.status(400).send({status:false,msg:"enter valid blogId"})
+        let blog = await blogModel.findOne({ _id: fromParamsBlogId, isDeleted: false }).select({ authorId: 1, _id: 0 })
+        if (!blog) return res.status(404).send({ status: false, msg: "blog  not found " })
+        if (blog.authorId != authorLoggedIn) return res.status(403).send({ status: false, msg: 'author logged is not allowed to modify the requested users data' })
+        next()
+       }
+ 
+  
+       
+    }
 
     catch (error) {
   

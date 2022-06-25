@@ -58,33 +58,24 @@ module.exports.createBlog = createBlog
 
 const getBlogData = async function (req, res) {
     try {
+            if(!req.query.authorId)return res.status(400).send({status:false,msg:"authorid required"})
+            
+            if(!isValidObjectId(req.query.authorId)) return res.status(400).send({status:false,msg:"enter valid blogId"})
 
-        let allBlogs = await blogModel.find({ isDeleted: true,isPublished:true })
-        if (allBlogs.length > 0) {
-            let authorId = req.query.authorId
-
-            if (authorId) {
-                let author = await blogModel.findOne({ authorId: req.query.authorId })
-                if (!author) {
-                    return res.status(400).send({ status: false, msg: "Author id is not vaild" })
-                }
-            }
-            req.query.isDeleted = false
-            req.query.isPublished=true
-            let updatedData = await blogModel.find(req.query)
-            if (updatedData.length > 0) {
-                res.status(200).send({ status: true, data: updatedData })
+        let  blogs = await blogModel.find({$and:[req.query,{isDeleted:false,isPublished:true}]})
+            if (blogs.length > 0) {
+                res.status(200).send({ status: true, data:blogs })
             }
             else {
                 res.status(404).send({ status: false, msg: "No blog found" })
 
             }
 
-        }
+        
     }
     catch (err) {
-        console.log("This is the error", err)
-        res.status(500).send({ msg: "server error", error: err })
+        
+        res.status(500).send({ msg:err.message})
     }
 }
 module.exports.getBlogData = getBlogData
@@ -98,10 +89,10 @@ module.exports.getBlogData = getBlogData
 
 const updateBlog = async function (req, res) {
     try {
-        let blogId = req.params.blogId
-        let blog = await blogModel.findOne({ _id: blogId, isDeleted: false })
-        if (!blog) { return res.status(400).send({ status: false, msg: "blog not found" }) }
+        
         let data = req.body
+        let blogId = req.params.blogId
+        if(Object.keys(data).length<1)return res.status(400).send({status:false,msg:"Enter what you want to update"})
         if (data.tags) {
             data.tags = blog.tags.concat(data.tags)
         }
@@ -128,7 +119,7 @@ module.exports.updateBlog = updateBlog
 
 
 
-let deleted = async function (req, res) {
+let deleteBlog = async function (req, res) {
     try {
         let id = req.params.blogId
         if (!id) return res.status(400).send({ sataus: false, msg: "blog id is required" })
@@ -147,7 +138,7 @@ let deleted = async function (req, res) {
 
 }
 
-module.exports.deleted = deleted
+module.exports.deleteBlog= deleteBlog
 
 
 
@@ -160,14 +151,12 @@ let queryDelete = async function (req, res) {
         let data = req.query
         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
         
-        let blogvalidation = await blogModel.find(data)
-        if (!blogvalidation) returnres.req(404).send({ status: false, msg: "blog does not exist" })
-        if (blogvalidation.isDeleted == true) return res.status(400).send({ status: false, msg: "blog is all ready deleted" })
-        for (let i = 0; i < blogvalidation.length; i++) {
-            if (blogvalidation[i].isDeleted == false) {
-                let deletion = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt: moment().format() } })
-            }
-        }
+        let blogs= await blogModel.find(data)
+        if (blogs.length<1) return res.req(404).send({ status: false, msg: "blog does not exist" })
+       
+       let deletedBlogs = await blogModel.updateMany(
+        {}
+       )
         return res.status(200).send({ status: true, msg: "blog is deleted sucessfully" })
 
     } catch (err) {

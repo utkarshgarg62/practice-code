@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 //Name Validation
 const isValidName =function(name){
-    const  nameRegex =/^[a-zA-Z, ]{2,30}$/
+    const  nameRegex =/^[a-zA-Z]{2,30}$/
     return nameRegex.test(name)
 }
 

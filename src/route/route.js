@@ -13,12 +13,12 @@ router.post("/authors", AuthorController.createAuthor)
 router.post("/login",AuthorController.loginAuthor)
 
 
-router.post("/blogs",forCreateBlogAuth, BlogController.createBlog)
-router.get("/blogs",authenticate,getBlogAuth, BlogController.getBlogData)
+router.post("/blogs",authenticate,newAuth, BlogController.createBlog)
+router.get("/blogs",authenticate,BlogController.getBlogData)
 
 
-router.put("/blogs/:blogId",authenticate,authorization, BlogController.updateBlog)
-router.delete("/blogs/:blogId",authenticate,authorization, BlogController.deleted)
+router.put("/blogs/:blogId",authenticate,newAuth, BlogController.updateBlog)
+router.delete("/blogs/:blogId",authenticate,newAuth, BlogController.deleteBlog)
 router.delete("/blogs",authenticate,forDeleteByQuery, BlogController.queryDelete)
 
 
