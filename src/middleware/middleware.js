@@ -42,7 +42,7 @@ const newAuth = async function (req, res, next) {
         if(!isValidObjectId(fromBodyAuthorId)) return res.status(400).send({status:false,msg:"enter valid blogId"})
         let author = await authorModel.findById(fromBodyAuthorId)
          if (!author) {
-            return res.status(400).send({ status: false, msg: "Author  is not exists" })
+            return res.status(404).send({ status: false, msg: "Author  is not exists" })
          }
         if (fromBodyAuthorId != authorLoggedIn) {
             return res.status(403).send({ status: false, msg: 'author logged is not allowed to create blog for another authorId' })

@@ -85,7 +85,7 @@ const updateBlog = async function (req, res) {
         let blogId = req.params.blogId
 
         let blog = await blogModel.findOne({ _id: blogId, isDeleted: false })
-        if (!blog) { return res.status(400).send({ status: false, msg: "blog not found" }) }
+        if (!blog) { return res.status(404).send({ status: false, msg: "blog not found" }) }
 
         if(Object.keys(data).length<1)return res.status(400).send({status:false,msg:"Enter what you want to update"})
         if (data.tags) {
@@ -122,9 +122,8 @@ let deleteBlog = async function (req, res) {
         if (!idvalidation) return res.status(400).send({ status: false, msg: "invalid blog id" })
         if (idvalidation.isDeleted == true) return res.status(400).send({ status: false, msg: "blog is already deleted" })
         if (idvalidation.isDeleted == false) {
-            let validetion = await blogModel.findOneAndUpdate({ _id: id }, { $set: { isDeleted: true, deletedAt: moment().format() } })
+            let validation = await blogModel.findOneAndUpdate({ _id: id }, { $set: { isDeleted: true, deletedAt: moment().format() } })
             return res.status(200).send({ status: true, msg: "blog is deleted successfully" })
-
         }
 
     } catch (err) {

@@ -42,7 +42,7 @@ const createAuthor = async function (req, res) {
         if(checkEmail) return res.status(400).send({msg :"Email Already Registered"})
         
         if (!isValid(password)) {
-            return res.status(404).send({ msg: "Create Password" })
+            return res.status(400).send({ msg: "Create Password" })
         }
         if (!isValidPassword(password)) {
             return res.status(400).send({ msg: "Minimum eight characters, at least one letter and one number" })
@@ -83,7 +83,7 @@ const loginAuthor = async function (req, res) {
             },
             "group-25"
         );
-        return res.status(201).send({ status: true, token: token });
+        return res.status(200).send({ status: true, token: token });
     }
     catch (error) {
         res.status(500).send({ msg: error.message })

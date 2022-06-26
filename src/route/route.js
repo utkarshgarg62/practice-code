@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AuthorController=require("../controller/authorController")
 const BlogController=require("../controller/blogController")
-const {authenticate,authorization,forCreateBlogAuth,forDeleteByQuery, newAuth, getBlogAuth} = require("../middleware/middleware")
+const {authenticate,forDeleteByQuery, newAuth } = require("../middleware/middleware")
 
 //====================================================APIs================================================================================
 
