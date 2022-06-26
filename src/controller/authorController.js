@@ -65,10 +65,14 @@ const createAuthor = async function (req, res) {
 const loginAuthor = async function (req, res) {
 
     try {
+        if (Object.keys(req.body).length<1) return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
+        
         let emailId = req.body.emailId;
-        let password = req.body.password;
         if(!emailId) return res.status(400).send({status:false,msg:"enter emailId"})
+
+        let password = req.body.password;
         if(!password) return res.status(400).send({status:false,msg:"enter password"})
+
         let author = await authorModel.findOne({ $and:[{email: emailId}, {password: password }]});
         if (!author)
             return res.status(400).send({
