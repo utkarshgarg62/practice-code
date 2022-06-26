@@ -77,6 +77,7 @@ const newAuth = async function (req, res, next) {
 
 
 
+
 const forDeleteByQuery = async function (req, res, next) {
     try {
         let token = req.headers["x-api-key"];
@@ -85,17 +86,14 @@ const forDeleteByQuery = async function (req, res, next) {
         let id = req.query.authorId
 
         let authorLoggedIn = decodedToken.authorId
-        if(!id) id=authorLoggedIn
-
-        let author = await authorModel.find({authorId:id})
-        if(!author) return res.status(401).send({ status: false, msg: "No author present" })
-
-
-        let blog = await blogModel.findOne({$and:[req.query,{authorId:id}]}).select({authorId:1,_id:0})
-        if (!blog) return res.status(401).send({ status: false, msg: "blog is not exists" })
-
-        if (blog.authorId != authorLoggedIn) return res.status(403).send({ status: false, msg: 'author logged is not allowed to modify the requested users data' })
-
+        
+        if(id){
+            if(!isValidObjectId(id))return res.status(400).send({status:false,msg:"Enter Valid authorId"})
+        if (id != authorLoggedIn) return res.status(403).send({ status: false, msg: 'author logged is not allowed to modify the requested users data' })
+        }
+        if (Object.keys(req.query).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
+        
+        if(!id) req.query.authorId = authorLoggedIn
         next()
     }
     catch (error) {
@@ -104,6 +102,7 @@ const forDeleteByQuery = async function (req, res, next) {
 
 
 }
+
 
 
 

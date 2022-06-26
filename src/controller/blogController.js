@@ -3,7 +3,8 @@ const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
 const moment = require('moment');
 const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/validation");
-const { decode } = require("jsonwebtoken");
+const { jwt } = require("jsonwebtoken");
+
 
 //====================================================Create Blog Api========================================================================
 
@@ -144,35 +145,17 @@ module.exports.deleteBlog= deleteBlog
 
 
 
-// let queryDelete = async function (req, res) {
-//     try {
-//         let data = req.query
-//         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
-        
-//         let blogs= await blogModel.find(data)
-//         if (blogs.length<1) return res.req(404).send({ status: false, msg: "blog does not exist" })
-       
-//        let deletedBlogs = await blogModel.updateMany(
-//         {}
-//        )
-//         return res.status(200).send({ status: true, msg: "blog is deleted sucessfully" })
-
-//     } catch (err) {
-//         res.status(500).send({ status: false, msg: err.message });
-//     }
-
-// }
 
 let queryDelete = async function (req, res) {
     try {
         let data = req.query
         if (Object.keys(data).length < 1) return res.status(400).send({ status: false, msg: "query params is not given" })
-        
+       
         let blogs= await blogModel.find({$and:[data,{isDeleted:false}]})
         if (blogs.length<1) return res.status(404).send({ status: false, msg: "blog does not exist" })
        
        let deletedBlogs = await blogModel.updateMany(
-        {data,isDeleted:false},
+        {$and:[data,{isDeleted:false}]},
         {isDeleted:true}
        )
         return res.status(200).send({ status: true, msg: "blog is deleted sucessfully" })
@@ -185,7 +168,4 @@ let queryDelete = async function (req, res) {
 
 
 module.exports.queryDelete = queryDelete
-
-
-
 
