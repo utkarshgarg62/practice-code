@@ -1,8 +1,6 @@
-const { response } = require("express");
 const authorModel = require("../models/authorModel");
-const validator = require('validation')
 const jwt = require('jsonwebtoken')
-const { isValidName, isValidTitle, isValidEmail, isValidPassword, isValidObjectId, isBoolean, isValid } = require("../middleware/validation")
+const { isValidName, isValidTitle, isValidEmail, isValidPassword, isValid } = require("../middleware/validation")
 
 
 

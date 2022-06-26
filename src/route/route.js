@@ -7,8 +7,6 @@ const {authenticate,authorization,forCreateBlogAuth,forDeleteByQuery, newAuth, g
 //====================================================APIs================================================================================
 
 
-
-
 router.post("/authors", AuthorController.createAuthor)
 router.post("/login",AuthorController.loginAuthor)
 

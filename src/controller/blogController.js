@@ -1,10 +1,6 @@
-const mongoose = require("mongoose");
-const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel")
 const moment = require('moment');
 const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/validation");
-const { jwt } = require("jsonwebtoken");
-
 
 //====================================================Create Blog Api========================================================================
 
