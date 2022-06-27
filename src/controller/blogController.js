@@ -35,7 +35,7 @@ const createBlog = async function (req, res) {
         }
 
         let savedData = await blogModel.create(req.body);
-        res.status(201).send({ msg: savedData });
+        res.status(201).send({ data: savedData });
     }
     catch (err) {
         res.status(500).send({ msg: "server error", error: err })
