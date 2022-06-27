@@ -97,7 +97,7 @@ const updateBlog = async function (req, res) {
         if (data.isPublished === true) { data.publishedAt = moment().format() }
 
         let updatedBlog = await blogModel.findOneAndUpdate({ _id: blogId }, { $set: data }, { new: true })
-        res.status(200).send(updatedBlog)
+        res.status(200).send({data:updatedBlog})
     }
     catch (error) {
         res.status(500).send({ msg: error.message })
