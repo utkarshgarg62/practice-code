@@ -73,7 +73,7 @@ const loginAuthor = async function (req, res) {
 
         let author = await authorModel.findOne({ $and:[{email: email}, {password: password }]});
         if (!author)
-            return res.status(400).send({
+            return res.status(401).send({
                 status: false,
                 msg: "email or the password is not correct",
             });
@@ -83,7 +83,7 @@ const loginAuthor = async function (req, res) {
             },
             "group-25"
         );
-        return res.status(200).send({ status: true, token: token });
+        return res.status(200).send({ status: true, data: {token: token} });
     }
     catch (error) {
         res.status(500).send({ msg: error.message })
