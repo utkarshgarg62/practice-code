@@ -4,7 +4,7 @@ const AuthorController=require("../controller/authorController")
 const BlogController=require("../controller/blogController")
 const {authenticate,forDeleteByQuery, newAuth } = require("../middleware/middleware")
 
-//====================================================APIs================================================================================
+//====================================================APIs=================================================================================
 
 
 router.post("/authors", AuthorController.createAuthor)

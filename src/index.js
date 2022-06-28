@@ -8,7 +8,7 @@ const app=express()
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 
-//====================================================Data-Base Connection=================================================================
+//===================================================Data-Base Connection=================================================================
 
 
 mongoose.connect("mongodb+srv://functionup-radon-cohort:radon123@cluster0.zbsotuc.mongodb.net/projectBlog?retryWrites=true&w=majority", {

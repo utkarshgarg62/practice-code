@@ -33,7 +33,6 @@ const  isValidObjectId =function(id){
 const isBoolean = function(value){
     if(value === true || value === false) return true
     return false
-    
 }
 
 //Value Validation
