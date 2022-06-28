@@ -48,7 +48,7 @@ const createAuthor = async function (req, res) {
             return res.status(400).send({ msg: "Minimum eight characters, at least one letter and one number" })
         }
         let savedData = await authorModel.create(req.body);
-        return res.status(201).send({ data: savedData });
+        return res.status(201).send({ status:true, data: savedData });
     }
     catch (err) {
         res.status(500).send({ msg: err.message })

@@ -7,7 +7,7 @@ const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/va
 
 const createBlog = async function (req, res) {
     try {
-        let {title,body,tags,category,subcategory,authorId} = req.body;
+        let {title,body,category,authorId} = req.body;
         
         if (Object.keys(req.body).length<1) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
@@ -35,7 +35,7 @@ const createBlog = async function (req, res) {
         }
 
         let savedData = await blogModel.create(req.body);
-        res.status(201).send({ data: savedData });
+        res.status(201).send({ status:true, data: savedData });
     }
     catch (err) {
         res.status(500).send({ msg: "server error", error: err })
@@ -59,13 +59,9 @@ const getBlogData = async function (req, res) {
             }
             else {
                 res.status(404).send({ status: false, msg: "No blog found" })
-
             }
-
-        
     }
     catch (err) {
-        
         res.status(500).send({ msg:err.message})
     }
 }
@@ -80,13 +76,10 @@ module.exports.getBlogData = getBlogData
 
 const updateBlog = async function (req, res) {
     try {
-        
         let data = req.body
         let blogId = req.params.blogId
-
         let blog = await blogModel.findOne({ _id: blogId, isDeleted: false })
         if (!blog) { return res.status(404).send({ status: false, msg: "blog not found" }) }
-
         if(Object.keys(data).length<1)return res.status(400).send({status:false,msg:"Enter what you want to update"})
         if (data.tags) {
             data.tags = blog.tags.concat(data.tags)
@@ -102,9 +95,7 @@ const updateBlog = async function (req, res) {
     catch (error) {
         res.status(500).send({ msg: error.message })
     }
-
 }
-
 module.exports.updateBlog = updateBlog
 
 
@@ -129,9 +120,7 @@ let deleteBlog = async function (req, res) {
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message });
     }
-
 }
-
 module.exports.deleteBlog= deleteBlog
 
 
@@ -154,11 +143,9 @@ let queryDelete = async function (req, res) {
         {isDeleted:true}
        )
         return res.status(200).send({ status: true, msg: "blog is deleted sucessfully" })
-
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message });
     }
-
 }
 
 
