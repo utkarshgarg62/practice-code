@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title><%= title %></title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-</head>
-<body>
-    <h1>User Sign</h1>
-    <form action="/route/sign" method="post">
-    <input type="text" placeholder="Enter name" name="name">
-    <input type="text" placeholder="Enter email" name="email">
-    <input type="password" placeholder="Enter password" name="password">
-    <button type="submit">SUBMIT</button>
-    </form>
+<%- include ("header") -%>
 
-    <h1>Login Page</h1>
-    <form action="/route/login" method="post">
-    <input type="text" placeholder="Enter email" name="email">
-    <input type="password" placeholder="Enter password" name="password">
-    <button type="submit">SUBMIT</button>
-    </form>
-</body>
-</html>
+<div class="container" >
+    <center><br><br>
+
+        <label>SIGN</label>
+        <form action="/route/sign" method="post">
+        <input type="text" placeholder="Enter name" name="name"><br>
+        <input type="text" placeholder="Enter email" name="email"><br>
+        <input type="password" placeholder="Enter password" name="password"><br><br>
+        <button type="submit"class="btn btn-primary btn-sm">SIGN</button><br><br>
+        </form><br><br>
+        <label>LOGIN</label>
+        <form action="/route/login" method="post">
+        <input type="text" placeholder="Enter email" name="email"><br>
+        <input type="password" placeholder="Enter password" name="password"><br><br>
+        <button type="submit"class="btn btn-primary btn-sm">LOGIN</button><br><br>
+        </form>
+
+    </center>
+</div>
+    
+
+
+<%- include ("footer") -%>
+
+

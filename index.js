@@ -9,12 +9,19 @@ const app=express()
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 
+
+
+
 app.set("view engine","ejs");
 
 //****** home route *****//
 app.get("/",(req,res)=>{
     res.render("base",{title:"Login System"});
 })
+
+
+
+
 
 app.use('/route', Router)  
 
