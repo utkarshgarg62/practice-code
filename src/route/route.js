@@ -9,6 +9,8 @@ const {authenticate,forDeleteByQuery, newAuth } = require("../middleware/middlew
 
 router.post("/authors", AuthorController.createAuthor)
 router.post("/login",AuthorController.loginAuthor)
+router.get("/logout",AuthorController.logoutAuthor)
+
 
 
 router.post("/blogs",authenticate, BlogController.createBlog)

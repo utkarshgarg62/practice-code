@@ -2,11 +2,17 @@ const express= require('express')
 const bodyparser=require('body-parser')
 const route=require('./route/route')
 const mongoose=require('mongoose')
-
+const path=require("path");
+const cookies= require('cookie-parser')
 
 const app=express()
+app.use(cookies())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
+
+
+const static_path = path.join(__dirname,"../public");
+app.use(express.static(static_path))
 
 //===================================================Data-Base Connection=================================================================
 

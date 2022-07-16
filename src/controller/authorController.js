@@ -77,13 +77,18 @@ const loginAuthor = async function (req, res) {
                 status: false,
                 msg: "email or the password is not correct",
             });
-        let token = jwt.sign(
+        
+        let token= jwt.sign(
             {
                 authorId: author._id.toString(),
             },
             "group-25"
         );
-        return res.status(200).send({ status: true, data: {token: token} });
+
+        res.cookie("jwt",token);
+        // res.render("/dashboard")
+        res.redirect('dashboard.html');
+        // return res.status(200).send({ status: true, data: {token: token} });
     }
     catch (error) {
         res.status(500).send({ msg: error.message })
@@ -96,3 +101,17 @@ const loginAuthor = async function (req, res) {
 
 module.exports.createAuthor = createAuthor
 module.exports.loginAuthor = loginAuthor
+
+
+
+
+const logoutAuthor = async function (req, res) {
+try {
+    res.clearCookie("jwt")
+    console.log('logout Sucessfully');
+    res.redirect("login_author.html")
+} catch (error) {
+    res.status(500).send(error)
+}
+}
+module.exports.logoutAuthor=logoutAuthor

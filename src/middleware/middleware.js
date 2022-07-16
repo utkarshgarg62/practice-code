@@ -9,21 +9,14 @@ const {isValidObjectId} = require('../middleware/validation')
 
 const authenticate = function (req, res, next) {
     try {
-        let token = req.headers["x-api-key"];
+    
+        console.log(req.cookies.jwt);
+        let token =req.cookies.jwt
+        // let token = req.headers["x-api-key"];
         if (!token) return res.status(400).send({ status: false, msg: "token must be present" });
-        let decodedToken = jwt.verify(token, "group-25", 
-        
-        function(err,decodedToken){
-            if(err)
-            return res.status(401).send({status:false,message:"Token is NOT Valid"})
-
-            next()
-        } );
-        //if (!decodedToken) return res.status(400).send({ status: false, msg: "token is invalid" });
-
-        
-
-
+        let decodedToken = jwt.verify(token, "group-25")
+        req.authorLoggedIn=decodedToken.authorId
+        next();
        
     } catch (error) {
         res.status(500).send({ msg: error.message })

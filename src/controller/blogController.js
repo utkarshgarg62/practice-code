@@ -8,15 +8,16 @@ const { isValid, isValidBlogTitle, isValidObjectId } = require("../middleware/va
 const createBlog = async function (req, res) {
     try {
         let {title,body,category,authorId} = req.body;
-        
         if (Object.keys(req.body).length<1) {
             return res.status(400).send({ msg: "Insert Data : BAD REQUEST" })
         }
         if (!isValid(title)) {
             return res.status(400).send({ msg: "Enter Title" })
+
         }
         if (!isValidBlogTitle(title)) {
             return res.status(400).send({ msg: "create valid title" })
+
         }
         if (!isValid(body)) {
             return res.status(400).send({ msg: "Enter Body" })
@@ -26,16 +27,17 @@ const createBlog = async function (req, res) {
             return res.status(400).send({ msg: "Enter Category" })
         }
        
-        if (!isValid(authorId)) {
-            return res.status(400).send({ msg: "Enter  Author Id" })
-        }
+        // if (!isValid(authorId)) {
+        //     return res.status(400).send({ msg: "Enter  Author Id" })
+        // }
        
-        if (!isValidObjectId(authorId)) {
-            return res.status(400).send({ msg: "Enter Valid Author Id" })
-        }
+        // if (!isValidObjectId(authorId)) {
+        //     return res.status(400).send({ msg: "Enter Valid Author Id" })
+        // }
+        req.body.authorId=req.authorLoggedIn
 
         let savedData = await blogModel.create(req.body);
-        res.status(201).send({ status:true, data: savedData });
+        res.status(201).send({ status: true,msg:savedData});
     }
     catch (err) {
         res.status(500).send({ msg: "server error", error: err })
