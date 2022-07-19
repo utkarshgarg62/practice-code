@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+    <!-- <form action="/blogs/:blogId" method="get">
+        <input type="text" name="blogId">
+    <input type="submit">
+        
+    </form> -->
+    <h1>
+        Upadate Book || <a href="/dashboard">DASHBOARD</a>
+    </h1>
+    <form action="/blogs/:blogId" method="post">
+
+    {{!-- blogId :<input type="text" name="blogId" placeholder="Enter blogId"> --}}
+    
+    title :<input type="text" name="title" placeholder="Enter title">
+    {{!-- body :<input type="text" name="body" placeholder="Enter body"> --}}
+    {{!-- tags :<input type="text" name="tags" placeholder="Enter tags"> --}}
+    {{!-- category :<input type="text" name="category" placeholder="Enter category"> --}}
+    {{!-- subcategory :<input type="text" name="subcategory" placeholder="Enter subcategory"> --}}
+
+
+    <input type="submit" value="Upadate">
+    </form>
+</body>
+</html>

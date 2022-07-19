@@ -86,8 +86,7 @@ const loginAuthor = async function (req, res) {
         );
 
         res.cookie("jwt",token);
-        // res.render("/dashboard")
-        res.redirect('dashboard.html');
+        res.redirect('/dashboard');
         // return res.status(200).send({ status: true, data: {token: token} });
     }
     catch (error) {
@@ -108,8 +107,8 @@ module.exports.loginAuthor = loginAuthor
 const logoutAuthor = async function (req, res) {
 try {
     res.clearCookie("jwt")
-    console.log('logout Sucessfully');
-    res.redirect("login_author.html")
+    // console.log('logout Sucessfully');
+    res.redirect("/login")
 } catch (error) {
     res.status(500).send(error)
 }

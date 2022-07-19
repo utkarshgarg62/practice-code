@@ -10,7 +10,7 @@ const {isValidObjectId} = require('../middleware/validation')
 const authenticate = function (req, res, next) {
     try {
     
-        console.log(req.cookies.jwt);
+        // console.log(req.cookies.jwt);
         let token =req.cookies.jwt
         // let token = req.headers["x-api-key"];
         if (!token) return res.status(400).send({ status: false, msg: "token must be present" });

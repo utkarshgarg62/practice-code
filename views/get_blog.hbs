@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+<script src="script.js"></script>
+</head>
+
+<body>
+
+
+    <a class="right" href="/dashboard">
+        Back
+        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+    </a>
+
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+
+    <div class="container-login100-form-btn">
+      <button class="login100-form-btn" onclick="getData()">
+        Get Data
+      </button>
+    </div>
+      {{!-- <a class="right" onclick="getData()">
+        Get Data
+        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+    </a> --}}
+    
+
+ <form action="/blogs" method="get" class="login100-form validate-form">
+<table class="table">
+    <thead>
+      <tr>
+        {{!-- <th>ID</th> --}}
+        <th>Title</th>
+        <th>Body</th>
+        {{!-- <th>authorId</th> --}}
+        {{!-- <th>tags</th> --}}
+        {{!-- <th>category</th> --}}
+        {{!-- <th>subcategory</th> --}}
+      </tr>
+    </thead>
+    <tbody id="table_data">
+
+    </tbody>
+  </table>
+  </form>
+
+               
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>

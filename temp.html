@@ -1,0 +1,188 @@
+<!-- login -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+     {{!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> --}}
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <h1>
+        Login Page || <a href="/">HOME PAGE</a>
+    </h1>
+    <form action="/login" method="post">
+        Email :<input type="text" name="email" placeholder="Enter Email">
+        Password :<input type="text" name="password" placeholder="Enter Password">
+        <input type="submit" class="btn-new" value="login">
+    </form>
+
+    
+</body>
+</html>
+
+
+
+<!-- register -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>
+        Create Author || <a href="/login">LOGIN PAGE</a>
+    </h1>
+    <form action="/authors" method="post">
+
+        fname :<input type="text" name="fname" placeholder="Enter fname">
+        lname :<input type="text" name="lname" placeholder="Enter lname">
+        title :<input type="text" name="title" placeholder="Enter title">
+        email :<input type="text" name="email" placeholder="Enter email">
+        password :<input type="password" name="password" placeholder="Enter password">
+   
+    <input type="submit" value="Register">
+    </form>
+</body>
+</html>
+
+
+
+<!-- index -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>HOME PAGE</h1>
+    
+    <a href="/register" >REGISTER AUTHOR</a>
+    <a href="/login" >LOGIN AUTHOR</a>
+</body>
+</html>
+
+<!-- dashboard -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{{title}}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    
+</head>
+<body>
+    <h1>
+        Dashboard || <a href="/logout">LOGOUT</a>
+    </h1>
+    <a href="/create">Create blog</a>
+    <a href="/update">Update blog</a>
+    <a href="/delete">Delete blog</a>
+    <a href="/get">Get blogs</a>
+<script src="script.js"></script>
+    
+</body>
+</html>
+
+<!-- create blog -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>
+        Create Book Page || <a href="/dashboard">DASHBOARD</a>
+    </h1>
+    <form action="/blogs" method="post">
+
+    title :<input type="text" name="title" placeholder="Enter title">
+    body :<input type="text" name="body" placeholder="Enter body">
+    tags :<input type="text" name="tags" placeholder="Enter tags">
+    category :<input type="text" name="category" placeholder="Enter category">
+    subcategory :<input type="text" name="subcategory" placeholder="Enter subcategory">
+
+    <input type="submit" value="Create">
+    </form>
+</body>
+</html>
+
+<!-- get blogs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<script src="script.js"></script>
+</head>
+<body style="padding: 40px;">
+
+<div class="container">
+    <div>
+        {{!-- <form action="/blogs" method="get">
+         AuthorId <input type="text" name="authorId">
+       <input type="submit" value="click-here">
+        
+        </form> --}}
+      
+    <button class="btn btn-primary" onclick="getData()">Load Data</button>
+    {{!-- <button class="btn btn-danger" onclick="clear()">ClearData</button> --}}
+    </div>
+    <div>
+ <form action="/blogs" method="get">
+<table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>authorId</th>
+        <th>tags</th>
+        <th>category</th>
+        <th>subcategory</th>
+      </tr>
+    </thead>
+    <tbody id="table_data">
+
+    </tbody>
+  </table>
+  </form>
+    </div>
+  
+</div>
+
+
+</body>
+</html>
+
+

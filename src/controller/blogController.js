@@ -57,7 +57,7 @@ const getBlogData = async function (req, res) {
         
         let  blogs = await blogModel.find({$and:[req.query,{isDeleted:false,isPublished:true}]})
             if (blogs.length > 0) {
-                res.status(200).send({ status: true, data:blogs })
+                res.status(200).json({ status: true, data:blogs })
             }
             else {
                 res.status(404).send({ status: false, msg: "No blog found" })
