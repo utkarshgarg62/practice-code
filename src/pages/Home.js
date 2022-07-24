@@ -28,7 +28,7 @@ export default function Home() {
             <div class="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
               <p>Created a Url shortening service like Bitly and tinyurl for easy sharing of long urls, also implemented caching to deliver quick responses.</p>
-              <a href="https://github.com/utkarshgarg62" class="github">github</a>.
+              <a href="https://github.com/utkarshgarg62" class="github">github</a>
             </div>
           </div>
         </div>
