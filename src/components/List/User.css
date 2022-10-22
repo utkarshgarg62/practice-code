@@ -1,19 +1,19 @@
-.user-container{
-    border: 1px solid #444;
-    background-color: #eee;
-    padding: 15px;
-    margin: 12px;
-    width: 200px;
+.user-container {
+  border: 1px solid #444;
+  background-color: #eee;
+  padding: 15px;
+  margin: 12px;
+  width: 200px;
 }
-.user-container .user-name{
-    font-size: 18px;
-    font-weight:  bold;
-    color: #000;
+.user-container .user-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
 }
-.user-container .user-details{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #444;
+.user-container .user-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
 }
