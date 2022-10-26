@@ -1,17 +1,24 @@
 import React from "react";
-// import Counter from "./components/Counter"
-// import Google from './components/Google'
-import List from "./components/List";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Product from "./components/pages/productPage"
+import Payment from "./components/pages/paymentPage"
+import HomePage from "./components/pages/homePage"
+import ErrorPage from "./components/pages/errorPage"
+import CryptoCurrency from "./components/pages/cryptoCurrency"
 
 const App = () => {
   return (
-    <div className="main">
-      {/* <div className="google"><Google/></div>
-            <div className="counter"><Counter/></div> */}
-      <div className="list">
-        <List />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage/>}></Route>
+        <Route path="product" element={<Product/>}></Route>
+        <Route path="payment" element={<Payment/>}></Route>
+        <Route path="cryptocurrency" element={<CryptoCurrency/>}></Route>
+        <Route path="*" element={<ErrorPage/>}></Route>
+
+      </Routes>
+    </BrowserRouter>
   );
 };
 export default App;

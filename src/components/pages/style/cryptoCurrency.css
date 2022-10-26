@@ -1,0 +1,31 @@
+.crypto-container {
+  /* display: flex; */
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.crypto-container ol {
+  width: 30%;
+  height: auto;
+  padding: 20px;
+  background-color: rgb(236, 228, 152);
+}
+
+.crypto-container div {
+  width: 40%;
+  height: 100vh;
+  padding: 20px;
+  background-color: black;
+}
+
+.crypto-container ol li {
+  padding: 10px;
+  border: 1px solid;
+  margin: 10px;
+}
+.crypto-container a{
+  color: #ffffff;
+  font-family: Times New Roman;
+  text-decoration: none;
+  background-color: rgb(135, 143, 65);
+}
