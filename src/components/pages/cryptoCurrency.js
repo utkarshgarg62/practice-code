@@ -22,8 +22,12 @@ const CryptoCurrency = () => {
       <div className="crypto-container">
         {cryptoList && cryptoList.length > 0 && (
           <ol>
-            {cryptoList.map((coin, index) => (
-              <li>{coin.name} [ Symbol - {coin.symbol} ]  <a href={coin.explorer}>Details</a></li>
+            {cryptoList.map((coin) => (
+              <li>
+                <span className="name">{coin.name} </span>
+                <span className="symbol">[ Symbol - {coin.symbol} ]</span>
+                <span className="details"> <a href={coin.explorer}>Details</a></span>
+              </li>
             ))}
           </ol>
         )}
