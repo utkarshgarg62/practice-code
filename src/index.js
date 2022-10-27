@@ -9,6 +9,7 @@ import Payment from "./components/pages/paymentPage";
 import HomePage from "./components/pages/homePage";
 import ErrorPage from "./components/pages/errorPage";
 import CryptoCurrency from "./components/pages/cryptoCurrency";
+import ProductLists from "./components/productList";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -21,6 +22,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
+        <Route path="products" element={<ProductLists />}></Route>
         <Route path="product" element={<Product />}></Route>
         <Route path="payment" element={<Payment />}></Route>
         <Route path="cryptocurrency" element={<CryptoCurrency />}></Route>
