@@ -46,8 +46,9 @@ const CryptoCurrency = () => {
                   <span className="user-name">{coin.name} </span>
                   <span className="price">
                     <span>Price - {coin.priceUsd}</span>
-                    <span> Full - 
-                      <a href={coin.explorer}>Details</a>
+                    <span>
+                      {" "}
+                      Full -<a href={coin.explorer}>Details</a>
                     </span>
                   </span>
                   <span className="user-details">{coin.symbol}</span>
@@ -57,10 +58,6 @@ const CryptoCurrency = () => {
           </ol>
         )}
       </div>
-
-
-
-
     </div>
   );
 };

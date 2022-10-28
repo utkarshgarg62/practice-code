@@ -12,7 +12,6 @@ import CryptoCurrency from "./components/pages/cryptoCurrency";
 // import ProductLists from "./components/productList";
 import StudentInfo from "./components/pages/studentInfoPage";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
