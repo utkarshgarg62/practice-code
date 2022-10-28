@@ -5,11 +5,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 
 import Product from "./components/pages/productPage";
-import Payment from "./components/pages/paymentPage";
+// import Payment from "./components/pages/paymentPage";
 import HomePage from "./components/pages/homePage";
 import ErrorPage from "./components/pages/errorPage";
 import CryptoCurrency from "./components/pages/cryptoCurrency";
-import ProductLists from "./components/productList";
+// import ProductLists from "./components/productList";
+import StudentInfo from "./components/pages/studentInfoPage";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -22,9 +23,10 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="products" element={<ProductLists />}></Route>
+        <Route path="studentinfo" element={<StudentInfo />}></Route>
+        {/* <Route path="products" element={<ProductLists />}></Route> */}
         <Route path="product" element={<Product />}></Route>
-        <Route path="payment" element={<Payment />}></Route>
+        {/* <Route path="payment" element={<Payment />}></Route> */}
         <Route path="cryptocurrency" element={<CryptoCurrency />}></Route>
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>

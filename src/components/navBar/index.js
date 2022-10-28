@@ -7,8 +7,10 @@ const NavBar = () => {
           Home
         </a>
         <a href="/product">Product</a>
-        <a href="/payment">Payment</a>
+        {/* <a href="/products">Product List</a> */}
+        {/* <a href="/payment">Payment</a> */}
         <a href="/cryptocurrency">Crypto Currency</a>
+        <a href="/studentinfo">Student Info</a>
       </div>
     </div>
   );

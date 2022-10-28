@@ -20,14 +20,6 @@ const CryptoCurrency = () => {
 
   return (
     <div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <h1>Crypto Currency List</h1>
       {/* STYLE 1 */}
       {/* <div className="crypto-container">

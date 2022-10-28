@@ -19,15 +19,6 @@ const ProductPage = () => {
 
   return (
     <div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <h1>Product Page</h1>
       <div clasName="container">
       {productList && productList.length > 0 && (
